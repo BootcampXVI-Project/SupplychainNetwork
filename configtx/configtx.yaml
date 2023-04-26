@@ -25,7 +25,7 @@ Organizations:
         ID: OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: ../organizations/ordererOrganizations/scm.com/msp
+        MSPDir: ../organizations/ordererOrganizations/suppplychain.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -42,7 +42,7 @@ Organizations:
                 Rule: "OR('OrdererMSP.admin')"
 
         OrdererEndpoints:
-            - orderer.scm.com:7050
+            - orderer.suppplychain.com:7050
     - &Supplier
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
@@ -51,7 +51,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: SupplierMSP
 
-        MSPDir: ../organizations/peerOrganizations/supplier.scm.com/msp
+        MSPDir: ../organizations/peerOrganizations/supplier.suppplychain.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -78,7 +78,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: ManufacturerMSP
 
-        MSPDir: ../organizations/peerOrganizations/manufacturer.scm.com/msp
+        MSPDir: ../organizations/peerOrganizations/manufacturer.suppplychain.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -105,7 +105,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: DistributorMSP
 
-        MSPDir: ../organizations/peerOrganizations/distributor.scm.com/msp
+        MSPDir: ../organizations/peerOrganizations/distributor.suppplychain.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -132,7 +132,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: RetailerMSP
 
-        MSPDir: ../organizations/peerOrganizations/retailer.scm.com/msp
+        MSPDir: ../organizations/peerOrganizations/retailer.suppplychain.com/msp
 
         # Policies defines the set of policies at this level of the config tree
         # For organization policies, their canonical path is usually
@@ -150,6 +150,33 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('RetailerMSP.peer')"
+    
+    - &Consumer
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: ConsumerMSP
+
+        # ID to load the MSP definition as
+        ID: ConsumerMSP
+
+        MSPDir: ../organizations/peerOrganizations/Consumer.suppplychain.com/msp
+
+        # Policies defines the set of policies at this level of the config tree
+        # For organization policies, their canonical path is usually
+        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ConsumerMSP.admin', 'ConsumerMSP.peer', 'ConsumerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ConsumerMSP.admin', 'ConsumerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ConsumerMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('ConsumerMSP.peer')"
 
 ################################################################################
 #
@@ -261,14 +288,14 @@ Orderer: &OrdererDefaults
     # as TLS validation.  The preferred way to specify orderer addresses is now
     # to include the OrdererEndpoints item in your org definition
     Addresses:
-        - orderer.scm.com:7050
+        - orderer.suppplychain.com:7050
 
     EtcdRaft:
         Consenters:
-        - Host: orderer.scm.com
+        - Host: orderer.suppplychain.com
           Port: 7050
-          ClientTLSCert: ../organizations/ordererOrganizations/scm.com/orderers/orderer.scm.com/tls/server.crt
-          ServerTLSCert: ../organizations/ordererOrganizations/scm.com/orderers/orderer.scm.com/tls/server.crt
+          ClientTLSCert: ../organizations/ordererOrganizations/suppplychain.com/orderers/orderer.suppplychain.com/tls/server.crt
+          ServerTLSCert: ../organizations/ordererOrganizations/suppplychain.com/orderers/orderer.suppplychain.com/tls/server.crt
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
@@ -367,6 +394,7 @@ Profiles:
                 - *Manufacturer
                 - *Distributor
                 - *Retailer
+                - *Consumer
             Capabilities: *ApplicationCapabilities
             
 

@@ -305,7 +305,7 @@ signing:
 #  if the server creates a self-signed TLS certificate.
 ###########################################################################
 csr:
-   cn: fabric-ca-server
+   cn: ca.distibutor.supplychain.com
    keyrequest:
      algo: ecdsa
      size: 256
@@ -313,14 +313,15 @@ csr:
       - C: US
         ST: "North Carolina"
         L:
-        O: Hyperledger
+        O: distibutor.supplychain.com
         OU: Fabric
    hosts:
-     - 721176e0af7d
      - localhost
+     - distibutor.supplychain.com
    ca:
       expiry: 131400h
       pathlength: 1
+
 
 ###########################################################################
 # Each CA can issue both X509 enrollment certificate as well as Idemix

@@ -19,6 +19,9 @@ organizations/fabric-ca/distributor/*
 organizations/fabric-ca/retailer/*
 !organizations/fabric-ca/retailer/fabric-ca-server-config.yaml
 
+organizations/fabric-ca/consumer/*
+!organizations/fabric-ca/consumer/fabric-ca-server-config.yaml
+
 organizations/ordererOrganizations/*
 organizations/peerOrganizations/*
 

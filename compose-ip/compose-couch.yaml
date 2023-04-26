@@ -7,7 +7,7 @@ version: '3.7'
 
 networks:
   test:
-    name: fabric_test
+    name: supplychain_network
     ipam:
      config:
        - subnet: 192.168.144.0/20
@@ -28,7 +28,7 @@ services:
       test:
         ipv4_address: 192.168.144.21
 
-  peer0.supplier.scm.com:
+  peer0.supplier.supplychain.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.supplier:5984
@@ -51,7 +51,7 @@ services:
       test:
         ipv4_address: 192.168.144.22
 
-  peer0.manufacturer.scm.com:
+  peer0.manufacturer.supplychain.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.manufacturer:5984
@@ -74,7 +74,7 @@ services:
       test:
         ipv4_address: 192.168.144.23
 
-  peer0.distributor.scm.com:
+  peer0.distributor.supplychain.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.distributor:5984
@@ -97,7 +97,7 @@ services:
       test:
         ipv4_address: 192.168.144.24
 
-  peer0.retailer.scm.com:
+  peer0.retailer.supplychain.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.retailer:5984
@@ -105,3 +105,26 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     depends_on:
       - couchdb.retailer
+
+  couchdb.consumer:
+    container_name: couchdb.consumer
+    image: couchdb:3.1.1
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - "9984:5984"
+    networks:
+      test:
+        ipv4_address: 192.168.144.25
+
+  peer0.consumer.supplychain.com:
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.consumer:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    depends_on:
+      - couchdb.consumer

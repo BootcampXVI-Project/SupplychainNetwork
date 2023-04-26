@@ -18,17 +18,20 @@ createAnchorPeerUpdate() {
   infoln "Generating anchor peer update transaction for ${ORG} on channel $CHANNEL_NAME"
 
   if [ $ORG = supplier ]; then
-    HOST="peer0.supplier.scm.com"
+    HOST="peer0.supplier.supplychain.com"
     PORT=7051
   elif [ $ORG = manufacturer ]; then
-    HOST="peer0.manufacturer.scm.com"
+    HOST="peer0.manufacturer.supplychain.com"
     PORT=7061
   elif [ $ORG = distributor ]; then
-    HOST="peer0.distributor.scm.com"
+    HOST="peer0.distributor.supplychain.com"
     PORT=7071
   elif [ $ORG = retailer ]; then
-    HOST="peer0.retailer.scm.com"
+    HOST="peer0.retailer.supplychain.com"
     PORT=7081
+  elif [ $ORG = consumer ]; then
+    HOST="peer0.consumer.supplychain.com"
+    PORT=7091
   else
     errorln "${ORG} unknown"
   fi
@@ -45,7 +48,7 @@ createAnchorPeerUpdate() {
 }
 
 updateAnchorPeer() {
-  peer channel update -o orderer.scm.com:7050 --ordererTLSHostnameOverride orderer.scm.com -c $CHANNEL_NAME -f ${CORE_PEER_LOCALMSPID}anchors.tx --tls --cafile "$ORDERER_CA" >&log.txt
+  peer channel update -o orderer.supplychain.com:7050 --ordererTLSHostnameOverride orderer.supplychain.com -c $CHANNEL_NAME -f ${CORE_PEER_LOCALMSPID}anchors.tx --tls --cafile "$ORDERER_CA" >&log.txt
   res=$?
   cat log.txt
   verifyResult $res "Anchor peer update failed"
@@ -59,4 +62,4 @@ setGlobalsCLI $ORG
 
 createAnchorPeerUpdate 
 
-updateAnchorPeer 
+updateAnchorPeer

@@ -177,6 +177,16 @@ function createOrgs() {
       fatalln "Failed to generate certificates..."
     fi
 
+    infoln "Creating Consumer Identities"
+
+    set -x
+    cryptogen generate --config=./organizations/cryptogen/crypto-config-consumer.yaml --output="organizations"
+    res=$?
+    { set +x; } 2>/dev/null
+    if [ $res -ne 0 ]; then
+      fatalln "Failed to generate certificates..."
+    fi
+
     infoln "Creating Orderer Identities"
 
     set -x
@@ -220,6 +230,10 @@ function createOrgs() {
     infoln "Creating Retailer Identities"
 
     createRetailer
+
+    infoln "Creating Consumer Identities"
+
+    createConsumer
 
     infoln "Creating Orderer Org Identities"
 
@@ -349,7 +363,7 @@ function networkDown() {
   # Don't remove the generated artifacts -- note, the ledgers are always removed
   if [ "$MODE" != "restart" ]; then
     # Bring down the network, deleting the volumes
-    ${CONTAINER_CLI} volume rm compose_orderer.supplychain.com compose_peer0.supplier.supplychain.com compose_peer0.manufacturer.supplychain.com compose_peer0.distributor.supplychain.com compose_peer0.retailer.supplychain.com
+    ${CONTAINER_CLI} volume rm compose_orderer.supplychain.com compose_peer0.supplier.supplychain.com compose_peer0.manufacturer.supplychain.com compose_peer0.distributor.supplychain.com compose_peer0.retailer.supplychain.com compose_peer0.consumer.supplychain.com
     #Cleanup the chaincode containers
     clearContainers
     #Cleanup images
@@ -363,6 +377,7 @@ function networkDown() {
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/manufacturer/msp organizations/fabric-ca/manufacturer/tls-cert.pem organizations/fabric-ca/manufacturer/ca-cert.pem organizations/fabric-ca/manufacturer/IssuerPublicKey organizations/fabric-ca/manufacturer/IssuerRevocationPublicKey organizations/fabric-ca/manufacturer/fabric-ca-server.db'
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/distributor/msp organizations/fabric-ca/distributor/tls-cert.pem organizations/fabric-ca/distributor/ca-cert.pem organizations/fabric-ca/distributor/IssuerPublicKey organizations/fabric-ca/distributor/IssuerRevocationPublicKey organizations/fabric-ca/distributor/fabric-ca-server.db'
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/retailer/msp organizations/fabric-ca/retailer/tls-cert.pem organizations/fabric-ca/retailer/ca-cert.pem organizations/fabric-ca/retailer/IssuerPublicKey organizations/fabric-ca/retailer/IssuerRevocationPublicKey organizations/fabric-ca/retailer/fabric-ca-server.db'
+    ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/consumer/msp organizations/fabric-ca/consumer/tls-cert.pem organizations/fabric-ca/consumer/ca-cert.pem organizations/fabric-ca/consumer/IssuerPublicKey organizations/fabric-ca/consumer/IssuerRevocationPublicKey organizations/fabric-ca/consumer/fabric-ca-server.db'
     ${CONTAINER_CLI} run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf organizations/fabric-ca/ordererOrg/msp organizations/fabric-ca/ordererOrg/tls-cert.pem organizations/fabric-ca/ordererOrg/ca-cert.pem organizations/fabric-ca/ordererOrg/IssuerPublicKey organizations/fabric-ca/ordererOrg/IssuerRevocationPublicKey organizations/fabric-ca/ordererOrg/fabric-ca-server.db'
     
     # remove channel and script artifacts
