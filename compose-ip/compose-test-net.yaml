@@ -248,7 +248,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7082
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.consumer.supplychain.com:7091
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.consumer.supplychain.com:7091
-      - CORE_PEER_LOCALMSPID=consumerMSP
+      - CORE_PEER_LOCALMSPID=ConsumerMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.consumer.supplychain.com:9844
       - CORE_METRICS_PROVIDER=prometheus

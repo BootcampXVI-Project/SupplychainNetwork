@@ -55,7 +55,7 @@ setGlobals() {
   
   elif [ $USING_ORG = consumer ]; then
     export CORE_PEER_LOCALMSPID="ConsumerMSP"
-    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_RETAILER_CA
+    export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_CONSUMER_CA
     export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/consumer.supplychain.com/users/Admin@consumer.supplychain.com/msp
     export CORE_PEER_ADDRESS=localhost:7091
 
@@ -87,7 +87,7 @@ setGlobalsCLI() {
   elif [ $USING_ORG = retailer ]; then
     export CORE_PEER_ADDRESS=peer0.retailer.supplychain.com:7081
   elif [ $USING_ORG = consumer ]; then
-    export CORE_PEER_ADDRESS=peer0.consumer.supplychain.com:7081
+    export CORE_PEER_ADDRESS=peer0.consumer.supplychain.com:7091
   else
     errorln "ORG Unknown"
   fi
