@@ -100,6 +100,8 @@ infoln "Joining distributor peer to the channel..."
 joinChannel distributor
 infoln "Joining retailer peer to the channel..."
 joinChannel retailer
+infoln "Joining consumer peer to the channel..."
+joinChannel consumer
 
 ## Set the anchor peers for each org in the channel
 infoln "Setting anchor peer for supplier..."
@@ -110,5 +112,7 @@ infoln "Setting anchor peer for distributor..."
 setAnchorPeer distributor
 infoln "Setting anchor peer for retailer..."
 setAnchorPeer retailer
+infoln "Setting anchor peer for consumer..."
+setAnchorPeer consumer
 
 successln "Channel '$CHANNEL_NAME' joined"
