@@ -151,7 +151,7 @@ function chaincodeQuery() {
     sleep $DELAY
     infoln "Attempting to Query peer0.${ORG}, Retry after $DELAY seconds."
     set -x
-    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["GetAllAssets"]}' >&log.txt
+    peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["GetAllProducts"]}' >&log.txt
     res=$?
     { set +x; } 2>/dev/null
     let rc=$res
