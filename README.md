@@ -40,3 +40,87 @@ You can then set up the environment variables for each organization. The `./scri
 ```bash
 source ./scripts/envVar.sh && setGlobals $ORG
 ```
+const msps: string[] = []
+const mspSupplier = "SupplierMSP"
+const mspManufacturer = "ManufacturerMSP"
+const mspDistributor = "DistributorMSP"
+const mspRetailer = "RetailerMSP"
+const mspConsumer = "ConsumerMSP"
+msps.push(mspSupplier)
+msps.push(mspManufacturer)
+msps.push(mspDistributor)
+msps.push(mspRetailer)
+msps.push(mspConsumer)
+
+const walletPath = path.join(__dirname, 'wallet');
+console.log("DEBUG", walletPath)
+//const org1UserId = 'typescriptAppUser';
+const userIds: string[] = []
+const supplierUserId = "SupplierUserId"
+const manufacturerUserId = "ManufacturerUserId"
+const distributorUserId = "DistributorUserId"
+const retailerUserId = "RetailerUserId"
+const consumerUserId = "ConsumerUserId"
+userIds.push(supplierUserId);
+userIds.push(manufacturerUserId);
+userIds.push(distributorUserId);
+userIds.push(retailerUserId);
+userIds.push(consumerUserId);
+
+const pathdirs: string[] = []
+pathdirs.push('connection-supplier.json')
+pathdirs.push('connection-manufacturer.json')
+pathdirs.push('connection-distributor.json')
+pathdirs.push('connection-retailer.json')
+pathdirs.push('connection-consumer.json')
+
+const cas: string[] = []
+cas.push('ca.supplier.supplychain.com')
+cas.push('ca.manufacturer.supplychain.com')
+cas.push('ca.distributor.supplychain.com')
+cas.push('ca.retailer.supplychain.com')
+cas.push('ca.consumer.supplychain.com')
+
+const orgs: string[] = []
+orgs.push('supplier')
+orgs.push('manufacturer')
+orgs.push('distributor')
+orgs.push('retailer')
+orgs.push('consumer')
+
+try {
+        for (let i = 0; i<5; i++){
+            const ccp = buildCCPOrg(pathdirs[i]);
+
+            const caClient = buildCAClient(ccp, cas[i]);
+
+            const wallet = await buildWallet(walletPath);
+
+            await enrollAdmin(caClient, wallet, msps[i]);
+
+            await registerAndEnrollUser(caClient, wallet, msps[i], userIds[i], orgs[i]+'.department');
+
+            const gateway = new Gateway();
+
+            const gatewayOpts: GatewayOptions = {
+                wallet,
+                identity: userIds[i],
+                discovery: { enabled: true, asLocalhost: true }, // using asLocalhost as this gateway is using a fabric network deployed locally
+            };
+
+            try{
+                await gateway.connect(ccp, gatewayOpts);
+
+                const network = await gateway.getNetwork(channelName);
+
+                const contract = network.getContract(chaincodeName);
+
+                
+            } finally {
+                gateway.disconnect();
+            }
+        }
+    } catch (error) {
+            console.error(`******** FAILED to run the application: ${error}`);
+            process.exit(1);
+    }
