@@ -1,25 +1,31 @@
 # Install fabric 2.5
+
 ```bash
 curl -sSL https://bit.ly/2ysbOFE | bash -s
 ```
 
 # Change directory to folder fabric-samples
+
 ```bash
 cd fabric-samples
 ```
 
 # Clone SupplychainNetwork into fabric-samples
+
 ```bash
 git clone https://github.com/BootcampXVI-Project/SupplychainNetwork.git
 ```
 
 # Running the Supplychain Network
+
 ## Change directory to folder Supplychain Network
+
 ```bash
 cd SupplychainNetwork
 ```
 
 ## Run network
+
 ```bash
 ./network.sh up createChannel -ca
 ```

@@ -556,7 +556,7 @@ else
 fi
 
 
-for file in $(find /home/eden/8.5.23/fabric-samples/SupplychainNetwork -name "*_sk"); do mv "$file" "${file%/*}/priv_sk"; done
+# for file in $(find /home/eden/8.5.23/fabric-samples/SupplychainNetwork -name "*_sk"); do mv "$file" "${file%/*}/priv_sk"; done
 
 # mv organizations/peerOrganizations/supplier.supplychain.com/users/User1@supplier.supplychain.com/msp/keystore/*_sk organizations/peerOrganizations/supplier.supplychain.com/users/User1@supplier.supplychain.com/msp/keystore/priv_sk
 
