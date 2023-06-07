@@ -555,16 +555,11 @@ else
   exit 1
 fi
 
-
-# for file in $(find /home/giahung/fabric-samples/SupplychainNetwork -name "*_sk"); do mv "$file" "${file%/*}/priv_sk"; done
-# for file in $(find /home/giahung/fabric-samples/SupplychainNetwork -name "*cert.pem"); do mv "$file" "${file%/*}/cert.pem"; done
+# for file in $(find /home/hdtt/9.5.23/fabric-samples/SupplychainNetwork -name "*_sk"); do mv "$file" "${file%/*}/priv_sk"; done
+# for file in $(find /home/hdtt/9.5.23/fabric-samples/SupplychainNetwork -name "*cert.pem"); do mv "$file" "${file%/*}/cert.pem"; done
 
 # mv organizations/peerOrganizations/supplier.supplychain.com/users/User1@supplier.supplychain.com/msp/keystore/*_sk organizations/peerOrganizations/supplier.supplychain.com/users/User1@supplier.supplychain.com/msp/keystore/priv_sk
-
 # mv organizations/peerOrganizations/manufacturer.supplychain.com/users/User1@manufacturer.supplychain.com/msp/keystore/*_sk organizations/peerOrganizations/manufacturer.supplychain.com/users/User1@manufacturer.supplychain.com/msp/keystore/priv_sk
-
 # mv organizations/peerOrganizations/distributor.supplychain.com/users/User1@distributor.supplychain.com/msp/keystore/*_sk organizations/peerOrganizations/distributor.supplychain.com/users/User1@distributor.supplychain.com/msp/keystore/priv_sk
-
 # mv organizations/peerOrganizations/retailer.supplychain.com/users/User1@retailer.supplychain.com/msp/keystore/*_sk organizations/peerOrganizations/retailer.supplychain.com/users/User1@retailer.supplychain.com/msp/keystore/priv_sk
-
 # mv organizations/peerOrganizations/consumer.supplychain.com/users/User1@consumer.supplychain.com/msp/keystore/*_sk organizations/peerOrganizations/consumer.supplychain.com/users/User1@consumer.supplychain.com/msp/keystore/priv_sk
